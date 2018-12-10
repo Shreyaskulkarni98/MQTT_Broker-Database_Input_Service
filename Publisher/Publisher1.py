@@ -4,7 +4,7 @@ import datetime
 import random
 import time
 
-logging.basicConfig(filename='example.log',filemode='w' , level=logging.INFO)
+logging.basicConfig(filename='example.log',filemode='w', level=logging.INFO)
 
 def on_connect(client, userdata, flags, rc):
 #    print "CONNACK received with code % d." % (rc)

@@ -1,14 +1,12 @@
 INFO:root:Before on message()
-INFO:root:12/10/18 16:45:19 Client is now subscribed to broker
-INFO:root:12/10/18 16:45:19 Client has recieved a message
-INFO:root:12/10/18 16:45:19 Message has been committed to database
-INFO:root:12/10/18 16:45:20 Client has recieved a message
-INFO:root:12/10/18 16:45:20 Message has been committed to database
-INFO:root:12/10/18 16:45:21 Client has recieved a message
-INFO:root:12/10/18 16:45:21 Message has been committed to database
-INFO:root:12/10/18 16:45:23 Client has recieved a message
-INFO:root:12/10/18 16:45:23 Message has been committed to database
-INFO:root:12/10/18 16:45:24 Client has recieved a message
-INFO:root:12/10/18 16:45:24 Message has been committed to database
-INFO:root:12/10/18 16:45:34 Client has recieved a message
-INFO:root:12/10/18 16:45:34 Message has been committed to database
+INFO:root:12/10/18 18:01:33 Client is now subscribed to broker
+INFO:root:12/10/18 18:01:33 Client has recieved a message
+INFO:root:12/10/18 18:01:33 Message has been committed to database
+INFO:root:12/10/18 18:01:34 Client has recieved a message
+INFO:root:12/10/18 18:01:34 Message has been committed to database
+INFO:root:12/10/18 18:01:35 Client has recieved a message
+INFO:root:12/10/18 18:01:35 Message has been committed to database
+INFO:root:12/10/18 18:01:35 Client has recieved a message
+INFO:root:12/10/18 18:01:35 Message has been committed to database
+INFO:root:12/10/18 18:01:36 Client has recieved a message
+INFO:root:12/10/18 18:01:36 Message has been committed to database

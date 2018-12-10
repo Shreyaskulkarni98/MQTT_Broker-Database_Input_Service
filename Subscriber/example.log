@@ -1,0 +1,14 @@
+INFO:root:Before on message()
+INFO:root:Before on message()
+INFO:root:12/07/18 16:45:47 Client is now subscribed to broker
+INFO:root:12/07/18 16:45:47 Client has recieved a message
+INFO:root:12/07/18 16:45:54 Client has recieved a message
+INFO:root:12/07/18 16:45:57 Client has recieved a message
+INFO:root:12/07/18 16:46:00 Client has recieved a message
+INFO:root:12/07/18 16:46:02 Client has recieved a message
+INFO:root:12/07/18 16:46:05 Client has recieved a message
+INFO:root:12/07/18 16:47:01 Client has recieved a message
+INFO:root:12/07/18 16:47:04 Client has recieved a message
+INFO:root:12/07/18 16:47:07 Client has recieved a message
+INFO:root:12/07/18 16:47:10 Client has recieved a message
+INFO:root:12/07/18 16:47:13 Client has recieved a message

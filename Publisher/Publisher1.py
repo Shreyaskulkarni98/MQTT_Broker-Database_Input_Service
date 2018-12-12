@@ -27,7 +27,7 @@ if __name__ == '__main__':
     json_doc = {
         "time": "2018-12-10 16:45:21",
         "message_topic": "topic1/subtopic/sub2topic/sub3topic",
-        "Qos": 2,
+        "Qos": 1,
         "message_payload": "Mango"
     }, {
         "time": "2018-12-15 18:33:11",
@@ -37,7 +37,7 @@ if __name__ == '__main__':
     }, {
         "time": "2018-08-15 13:05:44",
         "message_topic": "topic1/subtopic/sub2topic/sub3topic",
-        "Qos": 2,
+        "Qos": 1,
         "message_payload": "Apple"
     }, {
         "time": "2018-10-11 12:10:10",
@@ -47,7 +47,7 @@ if __name__ == '__main__':
     }, {
         "time": "2018-01-11 11:11:11",
         "message_topic": "topic1/subtopic/sub2topic/sub3topic",
-        "Qos": 2,
+        "Qos": 1,
         "message_payload": "Banana"
     }
 
@@ -55,8 +55,7 @@ if __name__ == '__main__':
 
     for x in json_doc:
         # word = random.choice(WORDS)
-        client.publish(x["message_topic"], x["message_payload"], qos=x["Qos"], retain=False)
+        client.publish(topic='f/f/f/f', payload=str(x), qos=1, retain=False)
         # Sleeping for 3 seconds
-        time.sleep(3)
 
     client.loop_stop()

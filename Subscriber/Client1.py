@@ -1,64 +1,55 @@
 import paho.mqtt.client as paho
 import logging
 import datetime
-import MySQLdb
 from elasticsearch import Elasticsearch
 
-curdtname = str(datetime.datetime.now().strftime('c')) + '.log'
-logging.basicConfig(filename='MySQL' + curdtname, filemode='w', level=logging.INFO)
-logging.basicConfig(filename='ElasticSearch' + curdtname, filemode='w', level=logging.INFO)
+global nm
+#curdtdate = str(datetime.datetime.now().strftime('x')) + '.log'
+logging.basicConfig(filename='logging.log', filemode='w', level=logging.INFO)
 
-try:
-    # Connecting to mysql db
-    conn = MySQLdb.connect(host='localhost', user='root', passwd='Kulkarni10')
-    logging.info(str(datetime.datetime.now().strftime("%c")) + ' Connected to a MySQL DB Successfully')
-    curs = conn.cursor()
-    # Connecting to es db
-    es = Elasticsearch()
-    logging.info(str(datetime.datetime.now().strftime("%c")) + ' Connected to a ElasticSearch Successfully')
+# Connecting to es db
+es = Elasticsearch()
+logging.info(str(datetime.datetime.now().strftime("%c")) + ' Connected to a ElasticSearch Successfully')
 
-    def on_subscribe(client, userdata, mid, granted_qos):
-        # print("Subscribed: " + str(mid) + " " + str(granted_qos))
-        logging.info(str(datetime.datetime.now().strftime("%c")) + ' Client is now subscribed to broker')
-
-        # Defining a mysql db
-        curs.execute('use test_database')
-
-        # Defining a es index
+def on_subscribe(client, userdata, mid, granted_qos):
+    # print("Subscribed: " + str(mid) + " " + str(granted_qos))
+    logging.info(str(datetime.datetime.now().strftime("%c")) + ' Client is now subscribed to broker')
 
 
+def on_message(client, userdata, msg):
+    print "Message recieved"
+    # print(msg.topic + " QoS Of Message=" + str(msg.qos) + " \nMessage: " + str(msg.payload))
+    logging.info(str(datetime.datetime.now().strftime("%c")) + " Client has recieved a message")
 
-    def on_message(client, userdata, msg):
-        print "Message recieved"
-        # print(msg.topic + " QoS Of Message=" + str(msg.qos) + " \nMessage: " + str(msg.payload))
-        logging.info(str(datetime.datetime.now().strftime("%c")) + " Client has recieved a message")
+    # Inserting into es
+    # print msg.topic + " " + msg.payload + " "
+    es.index(index='fruits', doc_type='tweet', body=msg.payload)
+    print "Inserted into ES"
+    logging.info(str(datetime.datetime.now().strftime("%c")) + " Inserted into ES")
 
-        try:
-            curs.execute("insert into mqttbroker values(now(),%s,%s,%s)", [str(msg.topic), str(msg.qos), str(msg.payload)])
-            conn.commit()
-        except(MySQLdb.Error, MySQLdb.Warning) as e:
-            print(e)
+if __name__ == '__main__':
+    client = paho.Client()
+    nm = 0
+    # Subscribing to a broker
+    client.on_subscribe = on_subscribe
+    logging.info("Before on message()")
+    client.on_message = on_message
 
-        logging.info(str(datetime.datetime.now().strftime("%c")) + " Message has been committed to database")
+    # Connecting to broker
+    client.connect("test.mosquitto.org", 1883)
+    client.subscribe('f/f/f/f', qos=1)
 
+    # Reopen this statement at the end of your code
+    while not raw_input() == 'exit':
+        client.loop()
 
-    if __name__ == '__main__':
-        client = paho.Client()
-        # Subscribing to a broker
-        client.on_subscribe = on_subscribe
-        logging.info("Before on message()")
-        client.on_message = on_message
+    print("looped  out")
+    res = es.search(index='fruits')
+    print res['hits']['hits']
+    for hit in res['hits']['hits']:
+        print hit['_source']['message_payload']
+        print 1
 
-        # Connecting to broker
-        client.connect("test.mosquitto.org", 1883)
-        client.subscribe("topic1/subtopic/sub2topic/sub3topic", qos=1)
-
-        while not raw_input() == 'exit':
-            client.loop()
-
-        client.loop_stop()
-        client.disconnect()
-
-finally:
-    conn.close()
+    # client.loop_stop()
+    # client.disconnect()
 

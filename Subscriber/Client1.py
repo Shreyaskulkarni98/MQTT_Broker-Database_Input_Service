@@ -45,10 +45,7 @@ if __name__ == '__main__':
 
     print("looped  out")
     res = es.search(index='fruits')
-    print res['hits']['hits']
-    for hit in res['hits']['hits']:
-        print hit['_source']['message_payload']
-        print 1
+    print res['hits']
 
     # client.loop_stop()
     # client.disconnect()

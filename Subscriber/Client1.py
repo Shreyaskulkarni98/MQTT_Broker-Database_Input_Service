@@ -2,17 +2,30 @@ import paho.mqtt.client as paho
 import logging
 import datetime
 import MySQLdb
+from elasticsearch import Elasticsearch
 
-logging.basicConfig(filename='example.log', filemode='w', level=logging.INFO)
+curdtname = str(datetime.datetime.now().strftime('c')) + '.log'
+logging.basicConfig(filename='MySQL' + curdtname, filemode='w', level=logging.INFO)
+logging.basicConfig(filename='ElasticSearch' + curdtname, filemode='w', level=logging.INFO)
 
 try:
+    # Connecting to mysql db
     conn = MySQLdb.connect(host='localhost', user='root', passwd='Kulkarni10')
+    logging.info(str(datetime.datetime.now().strftime("%c")) + ' Connected to a MySQL DB Successfully')
     curs = conn.cursor()
+    # Connecting to es db
+    es = Elasticsearch()
+    logging.info(str(datetime.datetime.now().strftime("%c")) + ' Connected to a ElasticSearch Successfully')
 
     def on_subscribe(client, userdata, mid, granted_qos):
         # print("Subscribed: " + str(mid) + " " + str(granted_qos))
         logging.info(str(datetime.datetime.now().strftime("%c")) + ' Client is now subscribed to broker')
+
+        # Defining a mysql db
         curs.execute('use test_database')
+
+        # Defining a es index
+
 
 
     def on_message(client, userdata, msg):

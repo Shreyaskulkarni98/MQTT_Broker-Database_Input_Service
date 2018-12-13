@@ -1,13 +1,14 @@
 import paho.mqtt.client as paho
 import logging
 import datetime
+import json
 # import random
 import time
 
-logging.basicConfig(filename='example.log', filemode='w', level=logging.INFO)
+curr_date = str(datetime.datetime.now().strftime("%d_%b_%Y"))
+logging.basicConfig(filename='Publisher_logging_' + curr_date + ".log", filemode='w', level=logging.INFO)
 
 def on_connect(client, userdata, flags, rc):
-    # print "CONNACK received with code % d." % (rc)
     logging.info(str(datetime.datetime.now().strftime("%c")) + ' Broker is now connected')
 
 
@@ -55,7 +56,8 @@ if __name__ == '__main__':
 
     for x in json_doc:
         # word = random.choice(WORDS)
-        client.publish(topic='f/f/f/f', payload=str(x), qos=1, retain=False)
+        client.publish(topic='f/f/f/f', payload=json.dumps(x), qos=1, retain=False)
         # Sleeping for 3 seconds
+        time.sleep(3)
 
     client.loop_stop()
